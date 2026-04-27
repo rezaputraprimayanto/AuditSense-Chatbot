@@ -1,0 +1,51 @@
+@import "react-pdf/dist/Page/TextLayer.css";
+@import "react-pdf/dist/Page/AnnotationLayer.css";
+
+/* ===== Global tokens (dark palette - borderless) ===== */
+:root{
+  /* Dark palette requested */
+  --bg: #ffffff;        /* background utama */
+  --surface: #101010;   /* sidebar / header area */
+  --surface2: #262628;  /* card / panel area */
+
+  /* Text */
+  --text: #ffffff;
+  --muted: #a6a6a6;
+
+  /* Accent */
+  --blue: #1165ff;
+  --blueSoft: rgba(180, 180, 180, 0.18);
+
+  /* Effects */
+  --shadow: 0 22px 70px rgba(0,0,0,0.60);
+  --shadowSoft: 0 14px 42px rgba(0,0,0,0.45);
+
+  /* Radius */
+  --r22: 22px;
+  --r18: 18px;
+  --r16: 16px;
+  --r14: 14px;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{ height: 100%; }
+
+body{
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+  background:
+    radial-gradient(1200px 600px at 50% -200px, rgb(255, 255, 255), transparent 60%),
+    radial-gradient(900px 500px at 80% 120%, rgb(255, 255, 255), transparent 65%),
+    #060606;
+}
+
+
+/* no outlines */
+button, input, textarea, select{
+  font: inherit;
+  outline: none;
+}
+button:focus, input:focus{ outline: none; }
