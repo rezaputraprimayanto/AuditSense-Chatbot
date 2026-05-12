@@ -29,12 +29,67 @@ AuditSense-Chatbot adalah aplikasi local RAG yang memungkinkan upload dokumen PD
    ```
 
 ## Download Model
-1. Download model `gemma-4-26B-A4B-it-Q4_K_M.gguf` dari Hugging Face.
-2. Letakkan file model di path berikut relatif ke root repository:
-   ```text
-   models/gemma4/gemma-4-26B-A4B-it-Q4_K_M.gguf
+1. Buat token Hugging Face
+   - Login ke Hugging Face.
+   - Buka `Settings` → `Access Tokens`.
+   - Klik `Create new token`.
+   - Pilih token tipe `Read` saja, karena hanya untuk download model.
+   - Copy token yang muncul, formatnya biasanya seperti:
+     ```text
+     hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+     ```
+   > Hugging Face CLI menggunakan User Access Token untuk autentikasi saat login atau mengakses repo tertentu.
+
+2. Install Hugging Face CLI
+   Di terminal:
+   ```powershell
+   pip install -U "huggingface_hub[cli]"
    ```
-3. Jika folder `models` atau `models/gemma4` belum ada, buat folder tersebut terlebih dahulu.
+   Cek sudah terinstall:
+   ```powershell
+   huggingface-cli --help
+   ```
+
+3. Login CLI
+   Jalankan:
+   ```powershell
+   huggingface-cli login
+   ```
+   - Nanti akan muncul prompt untuk memasukkan token.
+   - Paste token `hf_...`, lalu tekan Enter.
+   - Jika ditanya `Add token as git credential? (Y/n)`, tekan Enter saja atau ketik `Y`.
+   Cek login berhasil:
+   ```powershell
+   huggingface-cli whoami
+   ```
+
+4. Download model
+   - Buat folder jika belum ada:
+     ```powershell
+     mkdir -p models/gemma4
+     cd models/gemma4
+     ```
+   - Download file GGUF:
+     ```powershell
+     huggingface-cli download ggml-org/gemma-4-26B-A4B-it-GGUF \
+       gemma-4-26B-A4B-it-Q4_K_M.gguf \
+       --local-dir .
+     ```
+   - Setelah selesai, file akan ada di:
+     ```text
+     models/gemma4/gemma-4-26B-A4B-it-Q4_K_M.gguf
+     ```
+
+5. Versi satu blok
+   ```powershell
+   pip install -U "huggingface_hub[cli]"
+   huggingface-cli login
+   mkdir -p models/gemma4
+   cd models/gemma4
+   huggingface-cli download ggml-org/gemma-4-26B-A4B-it-GGUF \
+     gemma-4-26B-A4B-it-Q4_K_M.gguf \
+     --local-dir .
+   ```
 
 > Catatan: konfigurasi default backend berada di `backend/src/config.py` pada variabel `LLAMA_GGUF_PATH`.
 
@@ -60,16 +115,4 @@ Dari folder `frontend`:
 ```powershell
 npm run dev
 ```
-
-## Menggunakan Aplikasi
-1. Buka browser ke `http://localhost:3000`
-2. Upload dokumen dengan format:
-   - `.pdf`
-   - `.docx`
-3. Setelah upload berhasil, dokumen akan tersedia untuk diindeks dan dijadikan sumber jawaban.
-
-## Catatan Penting
-- Hanya file PDF dan DOCX yang didukung.
-- Jika model tidak ditemukan, pastikan file `gemma-4-26B-A4B-it-Q4_K_M.gguf` berada di folder `models/gemma4`.
-- Backend harus dijalankan sebelum frontend dapat menggunakan API upload dan preview dokumen.
 
