@@ -1020,7 +1020,19 @@ export default function PageTsx() {
     return out;
   }
 
+  function allowedUploadExt(fileName: string) {
+    const ext = fileName.slice(fileName.lastIndexOf(".")).toLowerCase();
+    return ext === ".pdf" || ext === ".docx";
+  }
+
   async function uploadFile(file: File) {
+    if (!allowedUploadExt(file.name)) {
+      const errMessage = "File type tidak didukung. Hanya PDF dan DOCX yang bisa diupload.";
+      pushToast(errMessage, "error");
+      alert(errMessage);
+      return;
+    }
+
     stopStream(false);
     stopIndexStream();
     setActiveCitation(null);
